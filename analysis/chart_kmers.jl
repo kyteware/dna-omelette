@@ -1,4 +1,4 @@
-using Plots
+using Plots, StatsPlots
 
 run(`./scripts/download_sample_fasta.bash`)
 
@@ -71,5 +71,9 @@ for i in 1:(length(nucleos)-klength)
     end
 end
 
+# prints the output dict
 println(kmers)
-bar(collect(keys(d)), collect(values(d)), orientation=:horizontal)
+# tries to display a graph (takes forever for some reason)
+display(bar(collect(keys(kmers)), collect(values(kmers))))
+# apparently this stops the display from immediatly closing
+readline()
