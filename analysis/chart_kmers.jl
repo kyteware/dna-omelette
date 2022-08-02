@@ -1,3 +1,5 @@
+using Plots
+
 run(`./scripts/download_sample_fasta.bash`)
 
 if length(ARGS) >= 1
@@ -57,4 +59,17 @@ for line in eachline("./sample.fasta")
     end
 end
 
-println(nucleos)
+kmers = Dict{String,Int64}()
+
+for i in 1:(length(nucleos)-klength)
+    global klength, kmers
+    kmer = SubString(nucleos, i, i+(klength-1))
+    if haskey(kmers, kmer)
+        kmers[kmer] += 1
+    else
+        kmers[kmer] = 1
+    end
+end
+
+println(kmers)
+bar(collect(keys(d)), collect(values(d)), orientation=:horizontal)
