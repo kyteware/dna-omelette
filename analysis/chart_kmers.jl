@@ -1,4 +1,4 @@
-using Plots, StatsPlots
+using Plots, Dictionaries
 
 run(`./scripts/download_sample_fasta.bash`)
 
@@ -73,7 +73,12 @@ end
 
 # prints the output dict
 println(kmers)
+
+# sorts the values
+sorted = sort(Dictionary(kmers), by = x->-x)
+
 # tries to display a graph (takes forever for some reason)
-display(bar(collect(keys(kmers)), collect(values(kmers))))
+display(bar(collect(keys(sorted)), collect(values(sorted))))
+
 # apparently this stops the display from immediatly closing
 readline()
