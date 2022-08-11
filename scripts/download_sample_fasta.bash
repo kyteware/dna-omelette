@@ -17,7 +17,6 @@ if test -f "$FILEPATH/sample.fasta"
 then
     echo "Sample FASTA file already downloaded, skipping..."
 else
-    echo "FILEPATH B4 DOWNLOAD: $FILEPATH"
-    wget -O "$FILEPATH/sample.fasta" "https://www.ncbi.nlm.nih.gov/sviewer/viewer.cgi?tool=portal&save=file&log$=seqview&db=nuccore&report=fasta&id=1798174254&extrafeat=null&conwithfeat=on&hide-cdd=on"
+    wget -q -O "$FILEPATH/sample.fasta" "https://www.ncbi.nlm.nih.gov/sviewer/viewer.cgi?tool=portal&save=file&log$=seqview&db=nuccore&report=fasta&id=1798174254&extrafeat=null&conwithfeat=on&hide-cdd=on"
     echo "Sample FASTA file downloaded..."
 fi

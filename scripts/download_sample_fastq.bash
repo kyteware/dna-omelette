@@ -17,7 +17,6 @@ if test -f "$FILEPATH/sample.fastq"
 then
     echo "Sample FASTQ file already downloaded, skipping..."
 else
-    echo "FILEPATH B4 DOWNLOAD: $FILEPATH"
-    wget -O "$FILEPATH/sample.fastq" "https://zenodo.org/record/3736457/files/1_control_psbA3_2019_minq7.fastq?download=1"
+    wget -q -O "$FILEPATH/sample.fastq" "https://zenodo.org/record/3736457/files/1_control_psbA3_2019_minq7.fastq?download=1"
     echo "Sample FASTQ file downloaded..."
 fi
