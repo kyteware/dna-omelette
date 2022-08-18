@@ -18,11 +18,11 @@ function countline(data, counter)
     return counter
 end
 
-input = read(# link your file)
+input = read(sample.fastq)
 counter = Dict()
 countline(input, counter)
 countline(input, counter)
-for line in eachline(# link the file you want)
+for line in eachline(sample.fastq)
     countline(line, counter)
 end
 counter
