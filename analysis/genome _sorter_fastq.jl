@@ -18,11 +18,11 @@ function countline(data, counter)
     return counter
 end
 
-input = read(sample.fastq)
+input = read(sample.fasta)
 counter = Dict()
 countline(input, counter)
 countline(input, counter)
-for line in eachline(sample.fastq)
+for line in eachline(sample.fasta)
     countline(line, counter)
 end
 counter
