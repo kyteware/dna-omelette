@@ -57,7 +57,11 @@ function main()
             push!(reads, reverse_sequence(sequence[readrange]))
         end
     end
-    println(reads)
+    
+    final = ""
+    for (i, read) in enumerate(reads)
+        final *= "@"*string(i, base=10, pad=1)*"\n"*read*"\n+\n"*("~"^length(read))*"\n"
+    end
+    println(final)
 end
-
 main()
