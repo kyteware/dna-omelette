@@ -15,20 +15,14 @@ function getargs()
     return readnum, readlenrange
 end
 
-function reverse_sequence(seq)
-    newseq = ""
-    for nucleo in reverse(seq)
-        if nucleo == 'A'
-            newseq *= 'T'
-        elseif nucleo == 'T'
-            newseq *= 'A'
-        elseif nucleo == 'G'
-            newseq *= 'C'
-        else
-            newseq *= 'G'
-        end
-    end
-    return newseq
+function compliment(seq)
+    return replace(
+        seq,
+        "A" => "T",
+        "T" => "A",
+        "G" => "C",
+        "C" => "G"
+    )
 end
 
 function main()
@@ -54,7 +48,7 @@ function main()
             push!(reads, sequence[readrange])
         else
             readrange = max(pos - rand(readlenrange), 1):pos
-            push!(reads, reverse_sequence(sequence[readrange]))
+            push!(reads, reverse(compliment(sequence[readrange])))
         end
     end
     
