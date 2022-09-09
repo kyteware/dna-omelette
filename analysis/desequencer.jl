@@ -1,5 +1,12 @@
+"""
+Get the terminal arguments.
 
+Returns:
+    (Int64, Range)
+    The number of reads and the range of possible read lengths.
+"""
 function getargs()
+    
     if length(ARGS) >= 1
         readnum = parse(Int64, ARGS[1])
     else
@@ -15,6 +22,13 @@ function getargs()
     return readnum, readlenrange
 end
 
+"""
+Replaces each nucleotide in a sequence with its compliment.
+
+Takes a sequence.
+
+Returns the inversed sequence.
+"""
 function compliment(seq)
     return replace(
         seq,
@@ -25,21 +39,21 @@ function compliment(seq)
     )
 end
 
-function main()
+
+function getsequence()
     run(`./scripts/download_sample_fasta.bash`)
-    readnum, readlenrange = getargs()
-    reads = Vector{String}()
-
-    # left = rand(round(readnum*0.25) : round(readnum*0.75))
-    # right = length(sample) - left
-
+    
     sequence = ""
     for line in readlines("./sample.fasta")
         if !startswith(line, ">")
             sequence *= strip(line)
         end
     end
+    return sequence
+end
 
+function buildreads(readnum, readlenrange, sequence)
+    reads = Vector{String}()
     for _ in 1:readnum
         pos = rand(1:length(sequence))
         toright = rand(Bool)
@@ -51,11 +65,19 @@ function main()
             push!(reads, reverse(compliment(sequence[readrange])))
         end
     end
-    
+    return reads
+end
+
+function main() 
+    readnum, readlenrange = getargs()
+    sequence = getsequence()
+    reads = buildreads(readnum, readlenrange, sequence)    
+
     final = ""
     for (i, read) in enumerate(reads)
         final *= "@"*string(i, base=10, pad=1)*"\n"*read*"\n+\n"*("~"^length(read))*"\n"
     end
     println(final)
 end
+
 main()
