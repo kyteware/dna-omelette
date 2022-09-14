@@ -1,4 +1,3 @@
-
 function countline(data)
     counter = Dict()
     for bp in data
@@ -17,13 +16,19 @@ function countline(data, counter)
     end
     return counter
 end
-
-input = read(# link your file)
+download("https://zenodo.org/record/3736457/files/1_control_psbA3_2019_minq7.fastq?download=1")
+input = read("sample.fastq")
 counter = Dict()
-countline(input, counter)
-countline(input, counter)
-for line in eachline(# link the file you want)
-    countline(line, counter)
+index = 1
+for line in eachline("sample.fastq")
+    global index
+    if index == 2 
+        countline(line, counter)
+        println(line)
+    elseif index == 4 
+        index = 0
+    end
+    index += 1
 end
 counter
-
+println(counter)
