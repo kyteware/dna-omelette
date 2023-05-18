@@ -1,7 +1,8 @@
 import Pkg
 Pkg.add("Dictionaries")
+Pkg.add("Plots")
 
-using Plots, Dictionaries
+using Plots; gr()
 
 run(`./scripts/download_sample_fasta.bash`)
 
@@ -36,10 +37,13 @@ end
 # prints the output dict
 vals = collect(values(kmers))
 
-println(vals)
-
 # tries to display a graph (takes forever for some reason)
-display(histogram(vals))
+display(histogram(
+    vals, 
+    # yaxis= (:log10, (1,Inf)), 
+    bins=50
+    )
+) # x axis log scale
 
 # apparently this stops the display from immediatly closing
 readline()

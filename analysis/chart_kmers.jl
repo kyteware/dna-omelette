@@ -1,3 +1,6 @@
+import Pkg
+Pkg.add("Dictionaries")
+
 using Plots, Dictionaries
 
 run(`./scripts/download_sample_fasta.bash`)
@@ -12,6 +15,8 @@ if length(ARGS) >= 2
 else
     seqnum = 1
 end
+
+filename = "./sample.fasta"
 
 # finding where the requested sequance starts
 linenum = 0
@@ -48,7 +53,7 @@ for line in eachline("./sample.fasta")
         end
     end
     # if it was one, the program will go from
-    # the previous if directly into this one
+    # the previous if directly int o this one
     # without iterating again
     if status == "iterating"
         if first(line, 1) == ">"

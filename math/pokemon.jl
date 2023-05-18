@@ -1,22 +1,24 @@
-import Pkg
-Pkg.add("Plots")
-using Plots
+# import Pkg
+# Pkg.add("Plots")
+# using Plots
 
 function main()
 
     bin = Vector()
-    for _ in 1:10000
-        pokemon = Vector()
+    for _ in 1:100000
+        pokemon = Set{Int32}()
+        tries = 0
         while true
-            new = rand(1:1500)
+            tries += 1
+            new = rand(1:100000)
             if new in pokemon
                 break
             end
             push!(pokemon, new)
         end
-        push!(bin, length(pokemon))
+        push!(bin, tries)
     end
-    println(bin)
-    display(Plots.histogram(bin))
+    println(sum(bin) / length(bin))
+    
 end
 main()

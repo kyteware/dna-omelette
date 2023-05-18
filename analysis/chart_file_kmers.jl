@@ -25,11 +25,11 @@ function main(klength, filename)
         kmer *= string(c)
     end
 
-    # prints the output dict
-    println(kmers)
-
     # sorts the values
     sorted = sort(Dictionary(kmers), by = x->-x)
+
+    # prints the output dict
+    println(sorted)
 
     # tries to display a graph (takes forever for some reason)
     display(bar(collect(keys(sorted)), collect(values(sorted))))
