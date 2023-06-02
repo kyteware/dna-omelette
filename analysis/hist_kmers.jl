@@ -12,6 +12,8 @@ else
     klength = 1
 end
 
+klength = 7
+
 filename = "./sample.fastq"
 kmers = Dict{String,Int64}()
 
@@ -20,8 +22,8 @@ for line in eachline(filename)
     global lines_until_read
     if lines_until_read == 0
         line = strip(line)
-        for i in 1:(length(line)-klength)
-            kmer = SubString(line, i:(i+klength))
+        for i in 1:(length(line)-klength+1)
+            kmer = SubString(line, i:(i+klength-1))
             if haskey(kmers, kmer)
                 kmers[kmer] += 1
             else
@@ -37,11 +39,13 @@ end
 # prints the output dict
 vals = collect(values(kmers))
 
+println(vals)
+
 # tries to display a graph (takes forever for some reason)
 display(histogram(
-    vals, 
-    # yaxis= (:log10, (1,Inf)), 
-    bins=50
+    vals,
+    xscale=:log10,
+    yscale=:log10,
     )
 ) # x axis log scale
 
