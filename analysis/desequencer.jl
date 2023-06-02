@@ -84,9 +84,9 @@ end
 
 """Determines whether or not to scramble based on if `rand(1:100)` is less than y where `y = 1/5000x^(11/4)`"""
 function shouldscramble(accuracy)
-    # threshhold = floor(Int, (1/5000)*((95 - accuracy)^(11/4)))
-    # return rand(1:100) < threshhold
-    return true
+    threshhold = floor(Int, (1/5000)*((95 - accuracy)^(11/4)))
+    return rand(1:100) < threshhold
+    # return true
 end
 
 """Converts a number from 1 to 95 to the corresponding fastq confidence value"""
