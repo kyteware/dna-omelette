@@ -45,8 +45,10 @@ println(vals)
 display(histogram(
     vals,
     xscale=:log10,
+    xlim=(1, 100000),
     yscale=:log10,
-    )
+    ylim=(1, 100000),
+)
 ) # x axis log scale
 
 # apparently this stops the display from immediatly closing
