@@ -1,4 +1,4 @@
-use std::{fs::File, io::{Read, BufReader}, path::PathBuf, process::exit};
+use std::{fs::File, io::BufReader, path::PathBuf, process::exit};
 
 use clap::Parser;
 use csv::Writer;
