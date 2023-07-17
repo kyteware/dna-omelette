@@ -2,6 +2,8 @@ use std::{io::{Read, BufReader}, collections::HashMap};
 
 use utf8_chars::BufReadCharsExt;
 
+const ILLEGAL_CHARS: [char; 1] = ['\n'];
+
 type Kmers = HashMap<Vec<char>, u32>;
 
 pub fn get_kmers<R: Read>(k: usize, seq: &mut BufReader<R>) -> Result<Kmers, KmerError> {
@@ -18,9 +20,14 @@ pub fn get_kmers<R: Read>(k: usize, seq: &mut BufReader<R>) -> Result<Kmers, Kme
     }
 
     // iterate over the rest of the chars
-    for c in chars {
+    'outer: for c in chars {
         kmer.rotate_left(1);
         kmer[k-1] = c;
+        for temp in &kmer {
+            if ILLEGAL_CHARS.contains(temp) {
+                continue 'outer;
+            }
+        }
         let count = kmers.entry(kmer.clone()).or_insert(0);
         *count += 1;
     }
