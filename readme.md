@@ -1,46 +1,34 @@
 # DNA Omlette
 
-Description goes here
+This repository of the work we did in observing the kmers in reads of DNA and using them to estimate how accurate they are.
 
-## Installation
+## Kmer-tool
 
-Installation instructions go here
+`kmer-tool` is a CLI tool for getting the kmers of a file and writing a csv for them. 
 
-## Overview
+```
+Usage: kmer-tool [OPTIONS] <INPUT> <OUTPUT>
 
-### Analysis
+Arguments:
+  <INPUT>   The file to read from
+  <OUTPUT>  The file to write to
 
-Description of Analysis Section
+Options:
+  -f, --force-k  This tool usually doesn't allow for k sizes large than 16, but this flag will allow it
+  -k <K>         The size of the kmer to be counted [default: 1]
+  -h, --help     Print help
+  -V, --version  Print version
+```
 
-#### chart_kmers.jl
+To build it, clone the repository and run
 
-Description of this files function
+```bash
+cd kmer-tool
+cargo build --release
+```
 
-#### count_fastq.jl
+Your executable will be in `.target/release`.
 
-Description of this files function
+## Accuracy estimation
 
-### Scripts
-
-Description of Script section
-
-#### download_sample_fasta.bash
-
-Description of this files function
-
-#### download_sample_fastq.bash
-
-Description of this files function
-
-#### generate_random_fasta.jl
-
-Description of this files function
-
-#### readme.md
-
-Hey! You're here right now!
-
-## Credits 
-
-Credits go here
-
+...
