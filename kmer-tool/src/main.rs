@@ -14,6 +14,11 @@ struct Cli {
     /// The size of the kmer to be counted.
     #[clap(short, default_value = "1")]
     k: usize,
+    /// If this option is set, instead of ignoring illegal characters, kmers containing them will 
+    /// be removed (this prevents strings that were not actually in the file from showing up in 
+    /// the csv).
+    #[clap(short, long)]
+    hard_skip: bool,
     /// The file to read from.
     #[clap()]
     input: PathBuf,
@@ -32,7 +37,7 @@ fn main() {
     }
 
     let mut input = BufReader::new(File::open(cli.input).unwrap());
-    let kmers = get_kmers(k, &mut input).unwrap();
+    let kmers = get_kmers(k, &mut input, cli.hard_skip).unwrap();
 
     let mut output = File::create(cli.output).unwrap();
     let mut writer = Writer::from_writer(&mut output);

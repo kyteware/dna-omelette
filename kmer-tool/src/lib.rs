@@ -6,7 +6,7 @@ const ILLEGAL_CHARS: [char; 1] = ['\n'];
 
 type Kmers = HashMap<Vec<char>, u32>;
 
-pub fn get_kmers<R: Read>(k: usize, seq: &mut BufReader<R>) -> Result<Kmers, KmerError> {
+pub fn get_kmers<R: Read>(k: usize, seq: &mut BufReader<R>, hard_skip: bool) -> Result<Kmers, KmerError> {
     let mut kmers: Kmers = HashMap::new();
     let mut kmer: Vec<char> = Vec::with_capacity(k);
     let mut chars = seq.chars().map(|c| c.unwrap());
@@ -19,17 +19,28 @@ pub fn get_kmers<R: Read>(k: usize, seq: &mut BufReader<R>) -> Result<Kmers, Kme
         return Err(KmerError::NotEnoughChars);
     }
 
-    // iterate over the rest of the chars
-    'outer: for c in chars {
-        kmer.rotate_left(1);
-        kmer[k-1] = c;
-        for temp in &kmer {
-            if ILLEGAL_CHARS.contains(temp) {
-                continue 'outer;
+    if hard_skip {
+        'outer: for c in chars {
+            kmer.rotate_left(1);
+            kmer[k-1] = c;
+            for temp in &kmer {
+                if ILLEGAL_CHARS.contains(temp) {
+                    continue 'outer;
+                }
             }
+            let count = kmers.entry(kmer.clone()).or_insert(0);
+            *count += 1;
         }
-        let count = kmers.entry(kmer.clone()).or_insert(0);
-        *count += 1;
+    } else {
+        for c in chars {
+            if ILLEGAL_CHARS.contains(&c) {
+                continue
+            }
+            kmer.rotate_left(1);
+            kmer[k-1] = c;
+            let count = kmers.entry(kmer.clone()).or_insert(0);
+            *count += 1;
+        }
     }
 
     if kmers.len() == 0 {
